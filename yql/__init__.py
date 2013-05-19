@@ -235,7 +235,7 @@ class YQLQuery(object):
 class Public(object):
     """Class for making public YQL queries"""
 
-    def __init__(self, api_key=None, shared_secret=None, httplib2_inst=None):
+    def __init__(self, env, cb, api_key=None, shared_secret=None, httplib2_inst=None):
         """Init the base class.
 
         Optionally you can pass in an httplib2 instance which allows you
@@ -244,6 +244,8 @@ class Public(object):
         Also it's very helpful in a testing scenario.
 
         """
+        self.env = env
+        self.cb = cb
         self.api_key = api_key
         self.secret = shared_secret
         self.http = httplib2_inst or Http()
@@ -256,6 +258,8 @@ class Public(object):
             query_params.update(params)
         query_params['q'] = query.query
         query_params['format'] = 'json'
+        query_params['env'] = self.env
+        query_params['callback'] = self.cb
 
         env = kwargs.get('env')
         if env:
@@ -294,6 +298,8 @@ class Public(object):
 
         yql_logger.debug("http_method: %s", http_method)
         if resp.get('status') == '200':
+            if (content.startswith(self.cb)):
+                return content
             return YQLObj(json.loads(content))
         else:
             raise YQLError(resp, content)
