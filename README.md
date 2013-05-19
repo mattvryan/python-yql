@@ -1,7 +1,7 @@
 # python-yql
+====
 
 This project is not actively maintained.  It is a fork of the original, found at https://github.com/project-fondue/python-yql.
-====
 
 (Note from the original author)
 Looking back at this project it's not where I would like it to be and I don't have the necessary time to 
