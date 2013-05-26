@@ -6,8 +6,8 @@ use_setuptools()
 
 from setuptools import setup, find_packages
 
-README = open('README.rst').read()
-VERSION = "0.8.0"
+README = open('README.md').read()
+VERSION = "0.8.1"
 
 setup(name='yql',
     version=VERSION,

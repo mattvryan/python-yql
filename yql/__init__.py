@@ -299,7 +299,9 @@ class Public(object):
         yql_logger.debug("http_method: %s", http_method)
         if resp.get('status') == '200':
             if (content.startswith(self.cb)):
-                return content
+                start = len('%s(' % self.cb)
+                end = len(");")
+                return content[start:-end]
             return YQLObj(json.loads(content))
         else:
             raise YQLError(resp, content)
